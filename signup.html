@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Activities</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div style="padding-left:20px;padding-right:20px">
+    <div class="wiki-container">
+      <header>
+        <nav>
+          <ul>
+            <li><a href="index.html" style="text-decoration: none;color:white">Menu</a></li>
+            <!-- <li>Order</li>
+              <li>customer</li> -->
+            <!-- <li><a href="reviews.html" style="text-decoration: none;color:white">Reviews</a></li> -->
+            <li><a href="login.html" style="text-decoration: none;color:white">Login</a></li>
+            <li><a href="signup.html" style="text-decoration: none;color:white">Register</a></li>
+            <!-- <li>Cart</li>
+              <li>Payment</li>
+              <li>Transaction</li> -->
+
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <div class="login-container">
+      <!-- <form id="loginForm">
+        
+      </form> -->
+      <h2>Signup to Canteen Order</h2>
+
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <label for="number">Mobile Number:</label>
+        <input type="tel" id="number" name="number" required>
+
+        <button type="submit" onclick="postData()">Signup</button>
+        <p style="margin-top:15px">Already have an account ? <a href="login.html"
+            style="text-decoration: none;">Login</a></p>
+    </div>
+
+  </div>
+<!--  -->
+  <!-- <script src="script.js"></script> -->
+  <script>
+    function postData() {
+      const url = 'http://localhost:8080/api/user/register';
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var phone = document.getElementById('number').value;
+
+      const data = {
+        "name": name,
+        "email": email,
+        "phoneNumber": phone,
+        "password": password
+      };
+      console.log(data)
+      fetch(url, {
+        method: 'POST',
+        mode: "cors",
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers if needed
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(result => {
+          console.log('Post request successful:', result);
+          // Do something with the result if needed
+          alert('User Sing Up');
+          navigateToNextPage();
+        });
+    }
+    function navigateToNextPage() {
+         // Replace 'nextpage.html' with the actual filename or URL of the next page
+         window.location.href = 'register.html';
+      }
+  </script>
+
+
+</body>
+
+</html>

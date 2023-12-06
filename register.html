@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Activities</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div style="padding-left:20px;padding-right:20px">
+        <div class="wiki-container">
+            <header>
+                <nav>
+                  <ul>
+                    <li><a href="index.html" style="text-decoration: none;color:white">Menu</a></li>
+                    <!-- <li>Order</li>
+                      <li>customer</li> -->
+                    <!-- <li><a href="reviews.html" style="text-decoration: none;color:white">Reviews</a></li> -->
+                    <li><a href="login.html" style="text-decoration: none;color:white">Login</a></li>
+                    <li><a href="signup.html" style="text-decoration: none;color:white">Register</a></li>
+                    <!-- <li>Cart</li>
+                      <li>Payment</li>
+                      <li>Transaction</li> -->
+        
+                  </ul>
+                </nav>
+              </header>
+        </div>
+
+
+
+        <div class="login-container">
+            <form id="loginForm">
+                <h2>Register your table</h2>
+
+
+                <label for="orderdate">Date:</label>
+                <input type="date" id="orderdate" name="orderdate" required>
+                <label for="time">Time:</label>
+                <input type="text" id="time" name="time" pattern="^(0?[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$" required
+                    value="12:00 AM">
+                <small>Format: HH:MM AM/PM</small>
+
+                <label for="tableno">Table No.:</label>
+                <select name="" id="seatscount">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                </select>
+                <button type="button">Register</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function login() {
+            const username = document.getElementById('orderdate').value;
+            const password = document.getElementById('time').value;
+
+            if (username && password) {
+                // Perform login logic here (e.g., check credentials)
+                alert(`Logged in as ${username}`);
+            } else {
+                alert('Please enter username and password.');
+            }
+        }
+    </script>
+    <script>
+        var data;
+        function postData() {
+            const orderDate = document.getElementById('orderdate').value;
+            const time = document.getElementById('time').value;
+            const seatscount = document.getElementById('seatscount').value;
+
+            const url = 'http://localhost:8080/api/register';
+
+            const data = {
+                "name": data.name,
+                "email": data.email,
+                "date": orderDate,
+                "time": time,
+                "tableNo": seatscount,
+                "usersEntity": {
+                    "id": 1
+                    // other fields of UsersEntity
+                }
+            };
+
+            fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other headers if needed
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log('Post request successful:', result);
+                    // Do something with the result if needed
+                    alert("Register done")
+                })
+                .catch(error => {
+                    alert("Register done")
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        function getDataFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const inputData = urlParams.get('data');
+            var data = inputData;
+            // Display the data on the page
+
+        }
+        window.onload = getDataFromUrl;
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>School Activities</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+   <div style="padding-left:20px;padding-right:20px">
+      <div class="wiki-container">
+         <header>
+            <nav>
+              <ul>
+                <li><a href="index.html" style="text-decoration: none;color:white">Menu</a></li>
+                <!-- <li>Order</li>
+                  <li>customer</li> -->
+                <!-- <li><a href="reviews.html" style="text-decoration: none;color:white">Reviews</a></li> -->
+                <li><a href="login.html" style="text-decoration: none;color:white">Login</a></li>
+                <li><a href="signup.html" style="text-decoration: none;color:white">Register</a></li>
+                <!-- <li>Cart</li>
+                  <li>Payment</li>
+                  <li>Transaction</li> -->
+    
+              </ul>
+            </nav>
+          </header>
+      </div>
+
+      <section class="about-area">
+         <div class="container">
+            <div class="row">
+               <div class="mb-60">
+                  <div class="section-title">
+                     <p style="text-align: center;">Famous for good food</p>
+                     <h4 style="text-align: center;margin-left:30px">our menu</h4>
+                  </div>
+               </div>
+            </div>
+            <div class="row menu_style1" id="api-data">
+               
+               
+            </div>
+
+         </div>
+      </section>
+   </div>
+
+   <script src="script.js"></script>
+   <script>
+      // Function to make a GET request to an API
+      function fetchData() {
+         // Replace 'https://api.example.com/data' with the actual API endpoint
+         fetch('http://localhost:8080/api/menu')
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+               return response.json();
+            })
+            .then(data => {
+               // Process the data received from the API
+               console.log(data);
+               displayData(data);
+            })
+            
+      }
+      function displayData(data) {
+        // Replace this with your own logic for displaying the data in the UI
+        const apiDataContainer = document.getElementById('api-data');
+        
+        // Clear previous content
+        apiDataContainer.innerHTML = '';
+
+        // Iterate through the data and create HTML elements for each item
+        data.forEach(item => {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col';
+
+            const menuListDiv = document.createElement('div');
+            menuListDiv.className = 'single_menu_list';
+
+            const img = document.createElement('img');
+            img.src = 'http://infinityflamesoft.com/html/restarunt-preview/assets/img/menu/menu-4.jpg';
+            img.alt = '';
+
+            const menuContentDiv = document.createElement('div');
+            menuContentDiv.className = 'menu_content';
+
+            const h4 = document.createElement('h4');
+            h4.innerHTML = `${item.name}<span>$${item.price}</span>`;
+
+            const p = document.createElement('p');
+            p.textContent = item.description;
+
+            // Append elements to build the structure
+            menuContentDiv.appendChild(h4);
+            menuContentDiv.appendChild(p);
+
+            menuListDiv.appendChild(img);
+            menuListDiv.appendChild(menuContentDiv);
+
+            colDiv.appendChild(menuListDiv);
+
+            apiDataContainer.appendChild(colDiv);
+        });
+    }
+
+      // Call the function when the page loads
+      window.onload = fetchData;
+   </script>
+
+
+</body>
+
+</html>
